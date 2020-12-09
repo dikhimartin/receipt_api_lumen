@@ -1,11 +1,5 @@
 # Docker + Lumen with Nginx and MySQL
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://poser.pugx.org/laravel/lumen-framework/d/total.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/lumen-framework/v/stable.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://poser.pugx.org/laravel/lumen-framework/license.svg)](https://packagist.org/packages/laravel/lumen-framework)
-
-
 This setup is great for writing quick apps in PHP using Lumen from an any Docker client. It uses docker-compose to setup the application services.
 
 ## Clone this repo
@@ -61,5 +55,8 @@ php artisan migrate
 php artisan cache:clear
 ```
 
-## Contribute
-Author = Dikhi Martin
+## Author Owner
+- [Dikhi Martin](https://www.linkedin.com/in/dikhi-martin/)
+
+## License
+[MIT](https://github.com/labstack/echo/blob/master/LICENSE)
