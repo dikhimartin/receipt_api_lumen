@@ -37,7 +37,7 @@ docker-compose up --build -d
 
 Navigate to [http://localhost:8001](http://localhost:8001) and you should see something like this
 
-Success! You can now start developing your Lumen app on your host machine and you should see your changes on refresh! Classic PHP development cycle. A good place to start is `images/php/app/routes/web.php`.
+Success! You can now start developing your Lumen app on your host machine and you should see your changes on refresh! Classic PHP development cycle. A good place to start is `app/routes/web.php`.
 
 Feel free to configure the default port 8001 in `docker-compose.yml` to whatever you like.
 
