@@ -1,6 +1,7 @@
 FROM php:7.2-fpm-alpine
 # lumen packages
 RUN docker-php-ext-install tokenizer mysqli pdo_mysql
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 # memcached
 ENV MEMCACHED_DEPS zlib-dev libmemcached-dev cyrus-sasl-dev
 RUN apk add --no-cache --update libmemcached-libs zlib
@@ -12,3 +13,4 @@ RUN set -xe \
     && rm -rf /usr/share/php7 \
     && rm -rf /tmp/* \
     && apk del .memcached-deps .phpize-deps
+
