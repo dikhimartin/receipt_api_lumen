@@ -2,9 +2,11 @@
 
 require_once __DIR__.'/../vendor/autoload.php';
 
-(new Laravel\Lumen\Bootstrap\LoadEnvironmentVariables(
-    dirname(__DIR__)
-))->bootstrap();
+try {
+    (new Dotenv\Dotenv(__DIR__.'/../'))->load();
+} catch (Dotenv\Exception\InvalidPathException $e) {
+    //
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -18,12 +20,12 @@ require_once __DIR__.'/../vendor/autoload.php';
 */
 
 $app = new Laravel\Lumen\Application(
-    dirname(__DIR__)
+    realpath(__DIR__.'/../')
 );
 
-// $app->withFacades();
+$app->withFacades();
 
-// $app->withEloquent();
+$app->withEloquent();
 
 /*
 |--------------------------------------------------------------------------
@@ -46,18 +48,15 @@ $app->singleton(
     App\Console\Kernel::class
 );
 
-/*
-|--------------------------------------------------------------------------
-| Register Config Files
-|--------------------------------------------------------------------------
-|
-| Now we will register the "app" configuration file. If the file exists in
-| your configuration driectory it will be loaded; otherwise, we'll load
-| the default version. You may register other files below as needed.
-|
-*/
+$app->singleton(
+    Illuminate\Contracts\Filesystem\Factory::class,
+    function ($app) {
+        return new Illuminate\Filesystem\FilesystemManager($app);
+    }
+);
 
-$app->configure('app');
+$app->configure('auth');
+$app->configure('cors');
 
 /*
 |--------------------------------------------------------------------------
@@ -71,12 +70,20 @@ $app->configure('app');
 */
 
 // $app->middleware([
-//     App\Http\Middleware\ExampleMiddleware::class
+//    App\Http\Middleware\ExampleMiddleware::class
 // ]);
 
-// $app->routeMiddleware([
-//     'auth' => App\Http\Middleware\Authenticate::class,
-// ]);
+$app->middleware([
+    // ...
+    \Barryvdh\Cors\HandleCors::class,
+]);
+
+$app->routeMiddleware([
+    'auth' => App\Http\Middleware\Authenticate::class,
+    'cors' => \Barryvdh\Cors\HandleCors::class,
+    'Image' => Intervention\Image\Facades\Image::class,
+ 
+]);
 
 /*
 |--------------------------------------------------------------------------
@@ -89,9 +96,18 @@ $app->configure('app');
 |
 */
 
-// $app->register(App\Providers\AppServiceProvider::class);
-// $app->register(App\Providers\AuthServiceProvider::class);
-// $app->register(App\Providers\EventServiceProvider::class);
+$app->register(App\Providers\AppServiceProvider::class);
+$app->register(App\Providers\AuthServiceProvider::class);
+$app->register(App\Providers\EventServiceProvider::class);
+$app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
+$app->register(Laravel\Passport\PassportServiceProvider::class);
+$app->register(Dusterio\LumenPassport\PassportServiceProvider::class);
+Dusterio\LumenPassport\LumenPassport::routes($app);
+$app->register(Barryvdh\Cors\ServiceProvider::class);
+$app->register(Dingo\Api\Provider\LumenServiceProvider::class);
+
+$app->register(Intervention\Image\ImageServiceProvider::class);
+
 
 /*
 |--------------------------------------------------------------------------
@@ -104,9 +120,7 @@ $app->configure('app');
 |
 */
 
-$app->router->group([
-    'namespace' => 'App\Http\Controllers',
-], function ($router) {
+$app->group(['namespace' => 'App\Http\Controllers'], function ($app) {
     require __DIR__.'/../routes/web.php';
 });
 
