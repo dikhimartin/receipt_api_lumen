@@ -15,11 +15,11 @@ class UserController extends Controller
     protected $userRepository;
     protected $userTransformer;
 
-    public function __construct(UsersRepository $userRepository, UserTransformer $userTransformer)
-    {
+    public function __construct(UsersRepository $userRepository, UserTransformer $userTransformer){
         $this->userRepository = $userRepository;
         $this->userTransformer = $userTransformer;
     }
+    
     public function show(){
         $user = $this->userRepository->getAll();
 
@@ -40,24 +40,12 @@ class UserController extends Controller
         $response = $this->response->item($user,new UserTransformer());
         return $response;
     }
-    
-    // public function view($id){
-    //     $user = $this->userRepository->getByid($id);
-
-    //     $response = $this->response->item($user,new UserTransformer());
-    //     return $response;
-    // }
 
     public function view($id){
-        // $question = Question::where('id',$id)->get();
-        // return response ($question);
-
         $model = User::find($id);
-
         $result=array(
                 "users"  => $model,
         );
-
         return response($result);
     }
 
@@ -73,16 +61,15 @@ class UserController extends Controller
         return response('Berhasil Merubah Data');
     }
     
-    public function logininfo(Request $request) {
+    public function logininfo(Request $request){
         return $request->user();
     }
 
-    public function logout(Request $request)
-    {
-    $request->user()->token()->revoke();
-    return response()->json([
-        'message' => 'Successfully logged out'
-        ]);
+    public function logout(Request $request){
+        $request->user()->token()->revoke();
+        return response()->json([
+            'message' => 'Successfully logged out'
+            ]);
     }
 
     public function cekEmail(Request $request){
@@ -97,8 +84,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function register(Request $request)
-    {
+    public function register(Request $request){
         $this->validate($request, [
             'email' => 'required|email|unique:users',
             'password' => 'required'
