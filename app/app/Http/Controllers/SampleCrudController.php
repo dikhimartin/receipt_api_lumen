@@ -9,17 +9,8 @@ use App\SampleCrud;
 
 class SampleCrudController extends Controller{
 
-
     public function index(Request $request){ 
-        return response()->json("10", 500);
+        return response()->json(error_500(), 500);
     }
 
 }
-
-	// function error_500(){
-	// 	$response = array(
-	//         "status"   =>500,
-	//         "message"  =>"Internal Server Error"
-	//     );
-	//    return $response;
-	// }

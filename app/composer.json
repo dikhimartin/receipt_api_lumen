@@ -24,7 +24,10 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/"
-        }
+        },
+        "files": [
+            "app/response.php" 
+        ]
     },
     "autoload-dev": {
         "classmap": [
