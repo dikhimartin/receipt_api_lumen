@@ -31,6 +31,9 @@ $api->version('v1', function($api){
     $api->group(['prefix'=>'v1','namespace'=>'App\Http\Controllers','middleware'=>['auth:api','cors']], function($api){
         // Controller route
 
+
+        $api->get('sample_crud/get_data','SampleCrudController@index');
+
         $api->get('users','UserController@show');
         $api->get('users_pengguna','UserController@showPengguna');
         $api->get('users_peserta','UserController@showPeserta');
