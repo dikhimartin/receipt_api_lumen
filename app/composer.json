@@ -13,7 +13,8 @@
         "barryvdh/laravel-cors": "0.9.3",
         "dingo/api": "1.0.*@dev",
         "doctrine/dbal": "^2.11",
-        "intervention/image": "^2.5"
+        "intervention/image": "^2.5",
+        "lcobucci/jwt": "3.3.3"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
